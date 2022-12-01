@@ -27,7 +27,8 @@ from bs4 import BeautifulSoup
 #         file.write(f'{line}\n')
 
 with open('persons_url_list.txt') as file:
-    lines = [line.strip() for line in file.readline()]
+
+    lines = [line.strip() for line in file.readlines()]
 
     data_dict = []
     count = 0
@@ -42,20 +43,19 @@ with open('persons_url_list.txt') as file:
         person_name = person_name_company[0]
         person_company = person_name_company[1].strip()
 
-        person_sm = soup.find_all(class_='bt-link-extern')
+        social_networks = soup.find_all(class_='bt-link-extern')
 
-        person_sm_urls = []
-        for item in person_sm:
-            person_sm_urls.append(item.get('href'))
+        social_networks_urls = []
+        for item in social_networks:
+            social_networks_urls.append(item.get('href'))
 
         data = {
-            "person_name": person_name,
-            "company_name": person_company,
-            "sm": person_sm_urls
+            'person_name': person_name,
+            'company_name': person_company,
+            'social_networks': social_networks_urls
         }
-
         count += 1
-        print(f'#{count}: {line} is done')
+        print(f'#{count}: {line} is done!')
 
         data_dict.append(data)
 
